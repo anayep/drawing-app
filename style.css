@@ -1,0 +1,62 @@
+@font-face {
+    font-family: Manjari;
+    src: url(fonts/Manjari-Bold.ttf);
+  }
+body {
+    background: rgb(171,61,255);
+    background: linear-gradient(90deg, rgba(171,61,255,1) 0%, rgba(101,198,252,1) 35%, rgba(193,245,255,1) 100%);
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Manjari';
+}
+
+.container {
+    display:flex;
+    justify-content: center;
+    margin:100px;
+    width:100%;
+    height:100%;
+}
+
+.container > * {
+    margin:5px;
+    max-height:900px;
+}
+
+.tool-box {
+    padding:20px;
+    width:100%;
+    max-width: 300px;
+    background: rgba(245, 255, 253, 0.38);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8.8px);
+    -webkit-backdrop-filter: blur(8.8px);
+    border: 1px solid rgba(199, 221, 218, 0.44);
+}
+
+.options {
+    padding-left: 20px;
+}
+.canvas {
+    background-color: white;
+    width: 100%;
+    max-width:600px;
+}
+
+.option svg {
+    color:#9972b8;
+}
+
+.option {
+    list-style-type: none;
+    color:#2a1f33;
+    padding-bottom:8px;
+}
+
+.row-horizontal >* {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
