@@ -4,7 +4,7 @@
   }
 body {
     background: rgb(171,61,255);
-    background: linear-gradient(90deg, rgba(171,61,255,1) 0%, rgba(101,198,252,1) 35%, rgba(193,245,255,1) 100%);
+    background: linear-gradient(90deg, #B983FF 0%, #94B3FD 35%, #94DAFF 75%, #99FEFF 100%);
     display:flex;
     align-items: center;
     justify-content: center;
@@ -14,7 +14,8 @@ body {
 .container {
     display:flex;
     justify-content: center;
-    margin:100px;
+    margin:auto;
+    margin-top:100px;
     width:100%;
     height:100%;
 }
@@ -27,7 +28,7 @@ body {
 .tool-box {
     padding:20px;
     width:100%;
-    max-width: 300px;
+    max-width: 200px;
     background: rgba(245, 255, 253, 0.38);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -39,24 +40,86 @@ body {
 .options {
     padding-left: 20px;
 }
-.canvas {
-    background-color: white;
-    width: 100%;
-    max-width:600px;
-}
 
 .option svg {
-    color:#9972b8;
+    color:#7858A6
 }
 
 .option {
     list-style-type: none;
-    color:#2a1f33;
+    color:#371B58;
     padding-bottom:8px;
 }
+
 
 .row-horizontal >* {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.row-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding:0px 25px;
+}
+
+.row-buttons > * {
+    width: 100%;
+    max-width: 300px;
+    padding:15px 10px;
+    margin:5px;
+    border-color: #94B3FD;
+    border-radius: 15px;
+    border-style: solid;
+    cursor: pointer;
+    background: rgb(210, 218, 255, 0.10);
+    backdrop-filter: blur(8.8px);
+    -webkit-backdrop-filter: blur(8.8px);
+    font-family: 'Manjari';
+    color:#2b2531;
+    font-size: 15px;
+    padding-top:17px;
+}
+
+.save-img {
+    background: #94B3FD;
+}
+
+.option > * {
+    cursor: pointer;
+}
+
+
+.option:is(:hover, .active) :where(svg, span,label){
+    filter: saturate(100%) brightness(50%);
+}
+
+#fill-color:checked ~label {
+    filter: saturate(100%) brightness(50%);
+}
+
+#size-slider {
+    width:170px;
+    opacity: 0.7; 
+}
+
+.clear-canvas:hover, .save-img:hover {
+    filter: saturate(200%) brightness(80%);
+}
+ 
+.drawing-board {
+    display: flex;
+    background-color: white;
+    width:100%;
+    max-width: 800px;
+    height:570px;
+}
+
+#canvas {
+    margin:auto;
+    width:100%;
+    height:570px;
 }
