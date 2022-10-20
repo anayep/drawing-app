@@ -37,18 +37,20 @@ const drawRect = (e) => {
 
 const drawCircle = (e) => {
     ctx.beginPath();
-    let radius = Math.sqrt(Math.pow((prevMouseX - e.offsetX), 2) + Math.pow((prevMouseY - e.offsetY), 2));
-    ctx.arc(prevMouseX, prevMouseY, radius, 0, 2 * Math.PI); 
+    let radius = Math.sqrt(Math.pow((startX - e.offsetX), 2) + Math.pow((startY - e.offsetY), 2));
+    ctx.arc(startX, startY, radius, 0, 2 * Math.PI); 
     if(fillColor.checked) ctx.fill();
     else ctx.stroke();
 }
 const drawTriangle = (e) => {
-    ctx.beginPath(); // creating new path to draw circle
-    ctx.moveTo(prevMouseX, prevMouseY); // moving triangle to the mouse pointer
-    ctx.lineTo(e.offsetX, e.offsetY); // creating first line according to the mouse pointer
-    ctx.lineTo(prevMouseX * 2 - e.offsetX, e.offsetY); // creating bottom line of triangle
-    ctx.closePath(); // closing path of a triangle so the third line draw automatically
-    fillColor.checked ? ctx.fill() : ctx.stroke(); // if fillColor is checked fill triangle else draw border
+    ctx.beginPath(); 
+    ctx.moveTo(startX, startY); 
+    ctx.lineTo(e.offsetX, e.offsetY); 
+    ctx.lineTo(startX * 2 - e.offsetX, e.offsetY); 
+    ctx.closePath();
+    if(fillColor.checked == true) ctx.fill();
+    else ctx.stroke();
+
 }
 
 const drawing = (e) => {
@@ -60,6 +62,7 @@ const drawing = (e) => {
     }
     else if (activeBtn === "rectangle") { drawRect(e); }
     else if (activeBtn ==="circle") { drawCircle(e); }
+    else { drawTriangle(e); }
     
 }
 
