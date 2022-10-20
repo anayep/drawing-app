@@ -1,7 +1,8 @@
 const canvas = document.getElementById('canvas');
 ctx = canvas.getContext('2d');
-clearCanvas = document.querySelector(".clear-canvas");
-slider = document.querySelector('#size-slider');
+
+const clearCanvas = document.querySelector(".clear-canvas");
+const slider = document.querySelector('#size-slider');
 const tools = document.querySelectorAll(".tool");
 const colorPicker = document.querySelector("#color-picker");
 const fillColor = document.querySelector('#fill-color');
@@ -9,6 +10,10 @@ const colorBtns = document.querySelectorAll('.colors .option')
 const undoBtn = document.querySelector('.undo-button');
 const saveImg = document.querySelector(".save-img");
 const popUp = document.querySelector("#myPopup");
+
+canvas.width = canvas.offsetWidth;
+canvas.height = canvas.offsetHeight;
+
 const centerX = canvas.width / 2;
 const centerY = canvas.height / 2;
 const radius = 100;
@@ -17,8 +22,6 @@ let isDrawing = false;
 let activeBtn = "brush";
 let brushWidth;
 let selectedColor;
-canvas.width = canvas.offsetWidth;
-canvas.height = canvas.offsetHeight;
 let startX, startY, snapshot;
 let snapshotUndo = [];
 
@@ -34,15 +37,11 @@ const startDraw = (e) => {
     snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
 }
 
-const stopDraw = () => {
-    isDrawing = false;
-    console.log("i am in pzda")
-}
-
 const undo = () => {
     console.log("im in undo")
     ctx.putImageData(snapshotUndo.pop(), 0, 0);
 }
+
 const drawRect = (e) => {
     if(fillColor.checked === false) {
         return ctx.strokeRect(e.offsetX, e.offsetY, startX-e.offsetX, startY-e.offsetY);
@@ -57,6 +56,7 @@ const drawCircle = (e) => {
     if(fillColor.checked) ctx.fill();
     else ctx.stroke();
 }
+
 const drawTriangle = (e) => {
     ctx.beginPath(); 
     ctx.moveTo(startX, startY); 
@@ -101,6 +101,7 @@ colorBtns.forEach(btn => {
         selectedColor = window.getComputedStyle(btn).getPropertyValue("background-color");
     });
 });
+
 colorPicker.addEventListener("change", () => {
     colorPicker.parentElement.style.background = colorPicker.value;
     colorPicker.parentElement.click();
@@ -120,14 +121,16 @@ saveImg.addEventListener("click", () => {
     link.click(); 
 });
 
-
-canvas.addEventListener("mousemove", drawing);
-canvas.addEventListener("mousedown", startDraw);
-canvas.addEventListener("mouseup", stopDraw);
-undoBtn.addEventListener("click",undo);
 addEventListener("load",() => {
     popUp.classList.toggle("show");
     setTimeout( () => {
         popUp.classList.toggle("show");
     },3000)
 })
+
+canvas.addEventListener("mousemove", drawing);
+canvas.addEventListener("mousedown", startDraw);
+canvas.addEventListener("mouseup", () => {
+    isDrawing = false;
+});
+undoBtn.addEventListener("click", undo);
