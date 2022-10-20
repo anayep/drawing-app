@@ -3,31 +3,46 @@ ctx = canvas.getContext('2d');
 clearCanvas = document.querySelector(".clear-canvas");
 slider = document.querySelector('#size-slider');
 const tools = document.querySelectorAll(".tool");
+const colorPicker = document.querySelector("#color-picker");
 const fillColor = document.querySelector('#fill-color');
+const colorBtns = document.querySelectorAll('.colors .option')
+const undoBtn = document.querySelector('.undo-button');
+const saveImg = document.querySelector(".save-img");
+const popUp = document.querySelector("#myPopup");
 const centerX = canvas.width / 2;
 const centerY = canvas.height / 2;
 const radius = 100;
 
 let isDrawing = false;
 let activeBtn = "brush";
+let brushWidth;
+let selectedColor;
 canvas.width = canvas.offsetWidth;
 canvas.height = canvas.offsetHeight;
 let startX, startY, snapshot;
-
-console.log(fillColor.checked)
+let snapshotUndo = [];
 
 const startDraw = (e) => {
+    snapshotUndo.push(ctx.getImageData(0, 0, canvas.width, canvas.height)); // remember prev canvas for undo
     isDrawing = true;
     ctx.beginPath();
     startX = e.offsetX;
     startY = e.offsetY;
+    ctx.lineWidth = brushWidth; 
+    ctx.strokeStyle = selectedColor;
+    ctx.fillStyle = selectedColor;
     snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
 }
 
 const stopDraw = () => {
     isDrawing = false;
+    console.log("i am in pzda")
 }
 
+const undo = () => {
+    console.log("im in undo")
+    ctx.putImageData(snapshotUndo.pop(), 0, 0);
+}
 const drawRect = (e) => {
     if(fillColor.checked === false) {
         return ctx.strokeRect(e.offsetX, e.offsetY, startX-e.offsetX, startY-e.offsetY);
@@ -56,7 +71,8 @@ const drawTriangle = (e) => {
 const drawing = (e) => {
     if (isDrawing == false) return;
     ctx.putImageData(snapshot, 0, 0);
-    if (activeBtn === "brush") {
+    if (activeBtn === "brush" || activeBtn === "eraser") {
+        if (activeBtn === "eraser") ctx.strokeStyle = "white"
         ctx.lineTo(e.offsetX, e.offsetY);
         ctx.stroke();
     }
@@ -78,6 +94,18 @@ for (let tool of tools) {
     
 }
 
+colorBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+        document.querySelector(".options .selected").classList.remove("selected");
+        btn.classList.add("selected");
+        selectedColor = window.getComputedStyle(btn).getPropertyValue("background-color");
+    });
+});
+colorPicker.addEventListener("change", () => {
+    colorPicker.parentElement.style.background = colorPicker.value;
+    colorPicker.parentElement.click();
+});
+
 slider.addEventListener("input", () => ctx.lineWidth = slider.value);
 
 clearCanvas.addEventListener("click", () => {
@@ -85,6 +113,21 @@ clearCanvas.addEventListener("click", () => {
 });
 
 
+saveImg.addEventListener("click", () => {
+    const link = document.createElement("a");
+    link.download = `${Date.now()}.jpg`;
+    link.href = canvas.toDataURL();
+    link.click(); 
+});
+
+
 canvas.addEventListener("mousemove", drawing);
 canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mouseup", stopDraw);
+undoBtn.addEventListener("click",undo);
+addEventListener("load",() => {
+    popUp.classList.toggle("show");
+    setTimeout( () => {
+        popUp.classList.toggle("show");
+    },3000)
+})

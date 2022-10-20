@@ -165,6 +165,63 @@ body {
     cursor: pointer;
 }
 
+.undo-button {
+    background-color: #94B3FD;
+    font-family: 'Manjari';
+    border:1px solid white;
+    cursor: pointer;
+    border-radius:10px;
+    margin: 1px;
+    display:flex;
+    font-size:15px;
+    padding-top:3px;
+
+}
+
+.popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: rgba(120, 88, 166, 0.3);
+    color: rgb(85, 71, 107);
+    text-align: center;
+    border-radius: 6px;
+    padding: 3px 3px 0px 0px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+    font-size:15px;
+    font-weight: 100;
+  }
+  
+  .popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(120, 88, 166, 0.3) transparent transparent transparent;
+  }
+
+  .popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s
+  }
+ 
+  @-webkit-keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+  }
+
 .clear-canvas:hover,
 .save-img:hover {
     filter: saturate(200%) brightness(80%);
